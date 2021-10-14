@@ -19,10 +19,13 @@ class MainFragment : Fragment() {
         val binding = FragmentMainBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
-        binding.viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        val viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        binding.viewModel = viewModel
 
         val adapter = AsteroidAdapter()
+        adapter.data = viewModel.asteroids
         binding.asteroidRecycler.adapter = adapter
+
 
 //        viewModel.asteroids.observe(viewLifecycleOwner, Observer {
 //            it?.let {
