@@ -23,15 +23,15 @@ class MainFragment : Fragment() {
         binding.viewModel = viewModel
 
         val adapter = AsteroidAdapter()
-        adapter.data = viewModel.asteroids
+        //adapter.data = viewModel.asteroids
         binding.asteroidRecycler.adapter = adapter
 
 
-//        viewModel.asteroids.observe(viewLifecycleOwner, Observer {
-//            it?.let {
-//                adapter.data = it
-//            }
-//        })
+        viewModel.asteroids.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.submitList(it)
+            }
+        })
 
         setHasOptionsMenu(true)
 
