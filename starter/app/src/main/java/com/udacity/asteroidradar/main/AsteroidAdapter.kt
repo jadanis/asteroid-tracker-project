@@ -6,13 +6,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.udacity.asteroidradar.Asteroid
-import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.databinding.ListItemAsteroidBinding
 
 /*
   Following Lesson 2.11 as a guide
 */
-class AsteroidAdapter:
+class AsteroidAdapter(val clickListener: AsteroidListener):
     ListAdapter<Asteroid, ViewHolder>(AsteroidDiffCallback()) {
 
 
@@ -22,7 +21,7 @@ class AsteroidAdapter:
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(item, clickListener)
     }
 
 }
@@ -33,16 +32,20 @@ class AsteroidAdapter:
 class ViewHolder private constructor(private val binding: ListItemAsteroidBinding): RecyclerView.ViewHolder(binding.root){
 
     fun bind(
-        item: Asteroid
+        item: Asteroid,
+        clickListener: AsteroidListener
     ) {
-        binding.asteroidNameText.text = item.codename
-        binding.passbyDate.text = item.closeApproachDate
-        binding.dangerIcon.setImageResource(
-            when (item.isPotentiallyHazardous) {
-                true -> R.drawable.ic_status_potentially_hazardous
-                else -> R.drawable.ic_status_normal
-            }
-        )
+//        binding.asteroidNameText.text = item.codename
+//        binding.passbyDate.text = item.closeApproachDate
+//        binding.dangerIcon.setImageResource(
+//            when (item.isPotentiallyHazardous) {
+//                true -> R.drawable.ic_status_potentially_hazardous
+//                else -> R.drawable.ic_status_normal
+//            }
+//        )
+        binding.asteroid = item
+        binding.clickListener = clickListener
+        binding.executePendingBindings()
     }
 
     companion object {
@@ -66,4 +69,9 @@ class AsteroidDiffCallback: DiffUtil.ItemCallback<Asteroid>(){
     }
 
 
+}
+
+//lesson 2.22
+class AsteroidListener(val clickListener: (id: Long) -> Unit){
+    fun onClick(asteroid: Asteroid) = clickListener(asteroid.id)
 }

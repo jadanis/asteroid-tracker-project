@@ -7,11 +7,15 @@
         <variable
             name="asteroid"
             type="com.udacity.asteroidradar.Asteroid" />
+        <variable
+            name="clickListener"
+            type="com.udacity.asteroidradar.main.AsteroidListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{() ->clickListener.onClick(asteroid)}">
 
         <TextView
             android:id="@+id/asteroid_name_text"
@@ -19,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/standard_margin"
             android:layout_marginTop="@dimen/standard_margin"
-            android:text="TextView"
+            android:text="@{asteroid.codename}"
             android:textSize="24sp"
             android:textColor="@color/colorAccent"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,14 +36,15 @@
             android:layout_marginEnd="@dimen/standard_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/asteroid_name_text"
-            app:srcCompat="@drawable/ic_status_normal" />
+            app:srcCompat="@drawable/ic_status_normal"
+            app:statusIcon="@{asteroid.potentiallyHazardous}"/>
 
         <TextView
             android:id="@+id/passby_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/standard_margin"
-            android:text="TextView"
+            android:text="@{asteroid.closeApproachDate}"
             android:textSize="20sp"
             android:textColor="@color/colorAccent"
             app:layout_constraintStart_toStartOf="@+id/asteroid_name_text"

@@ -12,8 +12,8 @@ class MainViewModel : ViewModel() {
         get() = _asteroids
 
     private val asteroid1 = Asteroid(0L, "68347", "2020-02-08", 0.0, 0.0, 0.0, 0.0, true)
-    private val asteroid2 = Asteroid(0L, "XK351", "2020-02-08", 0.0, 0.0, 0.0, 0.0, true)
-    private val asteroid3 = Asteroid(0L, "BA39", "2020-02-08", 0.0, 0.0, 0.0, 0.0, true)
+    private val asteroid2 = Asteroid(1L, "XK351", "2020-02-08", 0.0, 0.0, 0.0, 0.0, true)
+    private val asteroid3 = Asteroid(2L, "BA39", "2020-02-08", 0.0, 0.0, 0.0, 0.0, true)
 
     private val asteroidList = listOf<Asteroid>(
         asteroid1,
