@@ -2,7 +2,11 @@ package com.udacity.asteroidradar
 
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
+import com.squareup.picasso.Picasso
+
 
 @BindingAdapter("statusIcon")
 fun bindAsteroidStatusImage(imageView: ImageView, isHazardous: Boolean) {
@@ -40,3 +44,13 @@ fun bindTextViewToDisplayVelocity(textView: TextView, number: Double) {
     textView.text = String.format(context.getString(R.string.km_s_unit_format), number)
 }
 
+@BindingAdapter("imageUrl")
+fun bindPictureOfDayImage(imageView: ImageView, imageUrl: String?){
+    imageUrl?.let{
+        val uri = it.toUri().buildUpon().scheme("https").build()
+        //Picasso.with(imageView.context).load(uri).into(imageView)
+        Glide.with(imageView.context)
+            .load(uri)
+            .into(imageView)
+    }
+}
