@@ -1,14 +1,17 @@
 package com.udacity.asteroidradar.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.udacity.asteroidradar.Asteroid
-import com.udacity.asteroidradar.api.NetworkAsteroid
-import com.udacity.asteroidradar.api.asDatabaseModel
+import com.udacity.asteroidradar.api.AsteroidApi
+import com.udacity.asteroidradar.api.parseAsteroidsJsonResult
+import com.udacity.asteroidradar.asDatabaseModel
 import com.udacity.asteroidradar.database.asDomainModel
 import com.udacity.asteroidradar.database.AsteroidDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
 
 class AsteroidRepository(private val database: AsteroidDatabase) {
 
@@ -19,8 +22,16 @@ class AsteroidRepository(private val database: AsteroidDatabase) {
 
     suspend fun refreshAsteroids(){
         withContext(Dispatchers.IO){
-            val asteroids: List<NetworkAsteroid> = TODO("Network call to get asteroids")
-            database.asteroidDao.insertAll(*asteroids.asDatabaseModel())
+            try {
+                var asteroidResult = AsteroidApi.retrofitService.getProperties()
+                var networkAsteroids = parseAsteroidsJsonResult(JSONObject(asteroidResult))
+                database.asteroidDao.insertAll(*networkAsteroids.asDatabaseModel())
+            } catch (e: Exception){
+                e.message?.let{ Log.i("Repository: ",it)}
+            }
         }
     }
+
+
+
 }

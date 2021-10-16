@@ -4,6 +4,7 @@ import androidx.room.Database
 import com.udacity.asteroidradar.Asteroid
 import com.udacity.asteroidradar.database.DatabaseAsteroid
 
+//TODO(This whole class is moot)
 
 //TODO(add JSON annotation?)
 data class NetworkAsteroid(

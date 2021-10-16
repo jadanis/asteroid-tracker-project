@@ -14,8 +14,8 @@ interface AsteroidDao {
     fun insertAll(vararg asteroids: DatabaseAsteroid)
 }
 
-//TODO(add picture of day to data base)
-@Database(entities = [DatabaseAsteroid::class],version = 1)
+//Picture of day database is unnecessary
+@Database(entities = [DatabaseAsteroid::class],version = 2)
 abstract class AsteroidDatabase: RoomDatabase() {
     abstract val asteroidDao: AsteroidDao
 }
@@ -28,7 +28,9 @@ fun getDatabase(context: Context): AsteroidDatabase {
             INSTANCE = Room.databaseBuilder(context.applicationContext,
                 AsteroidDatabase::class.java,
                 "asteroids"
-            ).build()
+            )
+                .fallbackToDestructiveMigration()
+                .build()
         }
     }
     return INSTANCE
