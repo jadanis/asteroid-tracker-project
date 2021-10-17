@@ -24,8 +24,7 @@
             android:layout_marginStart="@dimen/standard_margin"
             android:layout_marginTop="@dimen/standard_margin"
             android:text="@{asteroid.codename}"
-            android:textSize="24sp"
-            android:textColor="@color/colorAccent"
+            android:contentDescription="@{asteroid.codename}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,12 +40,12 @@
 
         <TextView
             android:id="@+id/passby_date"
+            style="@style/TextAppearance.Subtext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/standard_margin"
             android:text="@{asteroid.closeApproachDate}"
-            android:textSize="20sp"
-            android:textColor="@color/colorAccent"
+            android:contentDescription="@{asteroid.closeApproachDate}"
             app:layout_constraintStart_toStartOf="@+id/asteroid_name_text"
             app:layout_constraintTop_toBottomOf="@+id/asteroid_name_text" />
     </androidx.constraintlayout.widget.ConstraintLayout>
