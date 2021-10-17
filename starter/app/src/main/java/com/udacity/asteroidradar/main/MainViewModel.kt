@@ -6,11 +6,13 @@ import androidx.lifecycle.*
 import com.udacity.asteroidradar.Asteroid
 import com.udacity.asteroidradar.PictureOfDay
 import com.udacity.asteroidradar.api.AsteroidApi
+import com.udacity.asteroidradar.api.AsteroidApiStatus
 import com.udacity.asteroidradar.api.parseAsteroidsJsonResult
 import com.udacity.asteroidradar.database.getDatabase
 import com.udacity.asteroidradar.repository.AsteroidRepository
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import timber.log.Timber
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -21,9 +23,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val imageResponse: LiveData<PictureOfDay>
         get() = _imageResponse
 
-    //private val _asteroids = MutableLiveData<List<Asteroid>>()
-
-
     private val _navigateToAsteroid = MutableLiveData<Asteroid>()
     val navigateToAsteroid: LiveData<Asteroid>
         get() = _navigateToAsteroid
@@ -33,7 +32,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch{
             repository.refreshAsteroids()
         }
-        //_asteroids.value = asteroidList
         getImage()
         //getAsteroids()
     }
@@ -61,7 +59,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 var imageResult = AsteroidApi.retrofitService.getImage()
                 _imageResponse.value = imageResult
             } catch (e: Exception){
-                e.message?.let { Log.i("ViewModel: ", it) }
+                e.message?.let { Timber.i(it) }
             }
         }
     }

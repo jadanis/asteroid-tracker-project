@@ -12,6 +12,7 @@ import com.udacity.asteroidradar.database.AsteroidDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
+import timber.log.Timber
 
 class AsteroidRepository(private val database: AsteroidDatabase) {
 
@@ -20,6 +21,7 @@ class AsteroidRepository(private val database: AsteroidDatabase) {
             it.asDomainModel()
         }
 
+
     suspend fun refreshAsteroids(){
         withContext(Dispatchers.IO){
             try {
@@ -27,7 +29,7 @@ class AsteroidRepository(private val database: AsteroidDatabase) {
                 var networkAsteroids = parseAsteroidsJsonResult(JSONObject(asteroidResult))
                 database.asteroidDao.insertAll(*networkAsteroids.asDatabaseModel())
             } catch (e: Exception){
-                e.message?.let{ Log.i("Repository: ",it)}
+                e.message?.let{ Timber.i(it)}
             }
         }
     }
