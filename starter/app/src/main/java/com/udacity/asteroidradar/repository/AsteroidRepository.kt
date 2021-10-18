@@ -1,6 +1,5 @@
 package com.udacity.asteroidradar.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.udacity.asteroidradar.Asteroid
