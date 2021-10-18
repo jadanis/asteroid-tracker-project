@@ -64,3 +64,4 @@ fun bindPictureOfDayImage(imageView: ImageView, imageUrl: String?){
             .into(imageView)
     }
 }
+

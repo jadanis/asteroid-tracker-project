@@ -13,6 +13,7 @@ class RefreshDataWorker(appContext: Context,params: WorkerParameters): Coroutine
         val repository = AsteroidRepository(database)
 
         return try {
+            repository.clearOldAsteroids()
             repository.refreshAsteroids()
             Result.success()
         } catch(e: HttpException){

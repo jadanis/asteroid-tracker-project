@@ -3,6 +3,7 @@ package com.udacity.asteroidradar.database
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.udacity.asteroidradar.api.day
 
 @Dao
 interface AsteroidDao {
@@ -10,8 +11,15 @@ interface AsteroidDao {
     @Query("SELECT * FROM databaseasteroid ORDER BY closeApproachDate ASC")
     fun getAsteroids(): LiveData<List<DatabaseAsteroid>>
 
+    @Query("SELECT * FROM databaseasteroid WHERE closeApproachDate = :today ORDER BY closeApproachDate ASC")
+    fun getTodaysAsteroids(today: String = day()): LiveData<List<DatabaseAsteroid>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg asteroids: DatabaseAsteroid)
+
+    @Query("DELETE FROM databaseasteroid WHERE closeApproachDate < :today")
+    fun clearOldAsteroids(today: String = day())
+
 }
 
 //Picture of day database is unnecessary

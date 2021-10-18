@@ -16,6 +16,7 @@ import timber.log.Timber
 
 class AsteroidRepository(private val database: AsteroidDatabase) {
 
+
     val asteroids: LiveData<List<Asteroid>> =
         Transformations.map(database.asteroidDao.getAsteroids()) {
             it.asDomainModel()
@@ -34,6 +35,16 @@ class AsteroidRepository(private val database: AsteroidDatabase) {
         }
     }
 
-
+    suspend fun clearOldAsteroids(){
+        withContext(Dispatchers.IO){
+            try {
+                database.asteroidDao.clearOldAsteroids()
+            } catch (e: Exception){
+                e.message?.let{
+                    Timber.i(it)
+                }
+            }
+        }
+    }
 
 }

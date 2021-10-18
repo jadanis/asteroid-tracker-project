@@ -24,6 +24,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         get() = _navigateToAsteroid
 
 
+
     init {
         viewModelScope.launch{
             repository.refreshAsteroids()
